@@ -1,0 +1,25 @@
+#  Env variables
+.env
+db_password.txt
+
+# Database local
+*.db
+
+# Python
+__pycache__/
+*.pyc
+
+#  Virtual environment
+venv/
+
+#  IDE
+.idea/
+.vscode/
+
+#  System
+.DS_Store
+
+node_modules/
+package-lock.json
+package.json
+
