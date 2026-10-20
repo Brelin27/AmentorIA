@@ -1,3 +1,4 @@
+import os
 # main.py
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,10 +10,17 @@ models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Tutor Socrático ENEM", version="0.1.0")
 
+# Preserva as origens locais/originais e permite configurar a URL do ambiente de testes.
+allowed_origins = ["http://localhost:3000", "https://amentoria-project.vercel.app"]
+allowed_origins.extend(
+    origin.strip().rstrip("/")
+    for origin in os.getenv("FRONTEND_URL", "").split(",")
+    if origin.strip()
+)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000",
-    "https://amentoria-project.vercel.app"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -1,3 +1,4 @@
+import os
 # routers/chat.py
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel
@@ -35,6 +36,9 @@ class SyncHistoryRequest(BaseModel):
 
 @router.post("/enviar")
 async def enviar_duvida(mensagem: ChatMessage, db: Session = Depends(get_db)):
+    # Falha de configuração não deve consumir o limite diário nem salvar uma mensagem.
+    if not os.getenv("OPENAI_API_KEY"):
+        raise HTTPException(status_code=503, detail="A chave da IA ainda não foi configurada no servidor.")
 
     
     user = db.query(User).filter(User.id == mensagem.aluno_id).first()
