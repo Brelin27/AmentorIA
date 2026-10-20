@@ -20,6 +20,12 @@ venv/
 .DS_Store
 
 node_modules/
-package-lock.json
-package.json
 
+
+# Build and local test artifacts
+.next/
+*.tsbuildinfo
+.venv/
+.pytest_cache/
+.env.*
+!.env.example
